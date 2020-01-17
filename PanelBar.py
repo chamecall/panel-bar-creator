@@ -113,7 +113,8 @@ class PanelBar:
         assert len(top_panel_values) == 4
 
         for i, new_value in enumerate(top_panel_values):
-            step = new_value // (self.ANIMATION_DURATION_IN_FRAMES - 1)
+            step = (new_value - self.cells[i].circle.percentage) // (self.ANIMATION_DURATION_IN_FRAMES - 1)
+
             values = [new_value - step * i for i in range(self.ANIMATION_DURATION_IN_FRAMES)][::-1]
             self.cells[i].set_new_values_deque(deque(values))
 
