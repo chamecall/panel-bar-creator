@@ -11,12 +11,13 @@ from RoundedRect import RoundedRect
 
 class PanelBar:
     # paddings in percentage
-    OUT_PADDING = 2
-    IN_PADDING = 1
+    TOP_BOTTOM_PADDING = 10
+    OUT_PADDING = 3
+    IN_PADDING = 0
     # that's about 0.3 sec when fps is 25
     ANIMATION_DURATION_IN_FRAMES = 9
-    TEXT_SCALE = 5
-    TEXT_THICKNESS = 8
+    TEXT_SCALE = 2
+    TEXT_THICKNESS = 3
     FONT = cv2.FONT_HERSHEY_SIMPLEX
 
     CIRCLE_COLORS = [Color.RED, Color.YELLOW, Color.BLUE, Color.AQUA]
@@ -33,9 +34,9 @@ class PanelBar:
         self.background[:] = Color.BACKGROUND_COLOR
         self.background[:self.top_rect.height, :self.top_rect.width] = self.top_rect.figure
         if not reverse:
-            self.background[self.bottom_rect.height:, :self.bottom_rect.width] = self.bottom_rect.figure
+            self.background[self.top_rect.height:, :self.bottom_rect.width] = self.bottom_rect.figure
         else:
-            self.background[self.bottom_rect.height:, self.background.shape[1] - self.bottom_rect.width:
+            self.background[self.top_rect.height:, self.background.shape[1] - self.bottom_rect.width:
                                                       self.background.shape[1]] = self.bottom_rect.figure
 
         self.top_work_area = None
@@ -58,18 +59,18 @@ class PanelBar:
 
     def calc_cells(self):
         width_padding = int(self.top_rect.width * (self.OUT_PADDING / 100))
-        height_padding = int(self.top_rect.height * (self.OUT_PADDING / 100))
+        height_padding = int(self.top_rect.height * (self.TOP_BOTTOM_PADDING / 100))
 
         btw_padding = int(self.top_rect.width * (self.IN_PADDING / 100))
 
         cell_width, cell_height = (self.top_rect.width - width_padding * 2 - btw_padding * 7) // 4, \
                                   self.top_rect.height - height_padding * 2
-        self.circle_diameter = cell_height
+        self.circle_diameter = cell_height 
 
         icon_width, icons_height = cell_width - cell_height, cell_height
 
         self.generate_circles()
-        self.load_icons((icon_width, icons_height // 2))
+        self.load_icons((icon_width, int(icons_height * 0.4)))
 
         for i, circle in enumerate(self.circles):
             self.cells.append(
