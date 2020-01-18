@@ -33,9 +33,9 @@ if args.cts:
 if args.ctt:
     Circle.TEXT_THICKNESS = args.ctt
 if args.tts:
-    PanelBar.TEXT_SCALE = args.tts
+    PanelBar.SCORE_TEXT_SCALE = args.tts
 if args.ttt:
-    PanelBar.TEXT_THICKNESS = args.ttt
+    PanelBar.SCORE_TEXT_THICKNESS = args.ttt
 
 
 class PanelGenerator:
@@ -55,7 +55,7 @@ class PanelGenerator:
                                 RoundedRect(self.BOTTOM_PANEL_SIZE, Color.PANEL_COLOR, round_top=False))
         self.l_panel = PanelBar(RoundedRect(self.TOP_PANEL_SIZE, Color.PANEL_COLOR, round_br=False),
                                 RoundedRect(self.BOTTOM_PANEL_SIZE, Color.PANEL_COLOR, round_top=False),
-                                reverse=True)
+                                is_left=True)
 
         self.background = np.ones((*self.VIDEO_RESOLUTION[::-1], 3), dtype='uint8')
         self.background[:] = Color.BACKGROUND_COLOR
@@ -78,13 +78,18 @@ class PanelGenerator:
             while line:
                 line = line.split(',')
                 time, left_panel, right_panel = line[0], line[1:5], line[5:]
+                emotion = ''
+                if len(right_panel) == 5:
+                    emotion = right_panel[-1]
+                    right_panel = right_panel[:-1]
+
                 left_panel, right_panel = list(map(int, left_panel)), list(map(int, right_panel))
                 clock = Clock(time)
                 while cur_time_in_msecs < clock.total_msecs:
                     do_step()
                     cur_time_in_msecs += self.ONE_FRAME_DURATION
 
-                self.l_panel.set_new_values(left_panel)
+                self.l_panel.set_new_values(left_panel, emotion)
                 self.r_panel.set_new_values(right_panel)
                 line = input_file.readline().strip()
 
