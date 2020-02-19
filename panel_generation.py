@@ -39,28 +39,26 @@ if args.ttt:
 
 
 class PanelGenerator:
-    TOP_PANEL_SIZE = 625, 142
-    BOTTOM_PANEL_SIZE = 243, 90
+
     VIDEO_FPS = 25
     VIDEO_RESOLUTION = 1920, 1080
     # in msec
     ONE_FRAME_DURATION = 1 / VIDEO_FPS * 1000
+    LR_MARGIN = 200
+    TOP_MARGIN = 80
 
     def __init__(self):
 
         self.video_writer = cv2.VideoWriter('panel_animation.mkv', cv2.VideoWriter_fourcc(*"XVID"), self.VIDEO_FPS,
                                             self.VIDEO_RESOLUTION)
 
-        self.r_panel = PanelBar(RoundedRect(self.TOP_PANEL_SIZE, Color.PANEL_COLOR, round_bl=False),
-                                RoundedRect(self.BOTTOM_PANEL_SIZE, Color.PANEL_COLOR, round_top=False))
-        self.l_panel = PanelBar(RoundedRect(self.TOP_PANEL_SIZE, Color.PANEL_COLOR, round_br=False),
-                                RoundedRect(self.BOTTOM_PANEL_SIZE, Color.PANEL_COLOR, round_top=False),
-                                is_left=True)
+        self.r_panel = PanelBar('user.png', 'YOU, 21')
+        self.l_panel = PanelBar('f_face.png', 'F, 23')
 
         self.background = np.ones((*self.VIDEO_RESOLUTION[::-1], 3), dtype='uint8')
         self.background[:] = Color.BACKGROUND_COLOR
 
-        self.lp_x, self.y, self.rp_x = 0, 0, self.VIDEO_RESOLUTION[0] - self.TOP_PANEL_SIZE[0]
+        self.lp_x, self.y, self.rp_x = self.LR_MARGIN, self.TOP_MARGIN, self.VIDEO_RESOLUTION[0] - self.r_panel.background.shape[1] - self.LR_MARGIN
 
     def process_file(self, input_file_name):
         cur_time_in_msecs = 0
@@ -70,6 +68,7 @@ class PanelGenerator:
             l_frame, r_frame = self.l_panel.updateUI(), self.r_panel.updateUI()
             phone[self.y:self.y + l_frame.shape[0], self.lp_x:self.lp_x + l_frame.shape[1]] = l_frame
             phone[self.y:self.y + r_frame.shape[0], self.rp_x:self.rp_x + r_frame.shape[1]] = r_frame
+
             self.video_writer.write(phone)
 
         with open(input_file_name, 'r') as input_file:
