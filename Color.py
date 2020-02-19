@@ -9,8 +9,9 @@ class Color(tuple, Enum):
     GREEN = (0, 255, 0)
     YELLOW = (0, 255, 255)
     AQUA = (255, 255, 0)
+    TRANSPARENT = (0, 0, 0, 0)
 
 
-    BACKGROUND_COLOR = GREEN
+    BACKGROUND_COLOR = TRANSPARENT
     PANEL_COLOR = (70, 70, 70)
 
