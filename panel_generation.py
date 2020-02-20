@@ -65,7 +65,7 @@ class PanelGenerator:
 		cur_time_in_msecs = 0
 
 		def do_step():
-			_, phone = self.cap.read()
+			captured, phone = self.cap.read()
 			l_panel_fragment = phone[self.y:self.y + self.l_panel.background.shape[0], self.lp_x:self.lp_x + self.l_panel.background.shape[1]]
 			r_panel_fragment = phone[self.y:self.y + self.r_panel.background.shape[0], self.rp_x:self.rp_x + self.r_panel.background.shape[1]]
 
@@ -76,17 +76,33 @@ class PanelGenerator:
 
 
 			self.video_writer.write(phone)
+			return captured
 
 		with open(input_file_name, 'r') as input_file:
 			line = input_file.readline().strip()
 
 			while line:
 				line = line.split(',')
-				time, left_panel, right_panel = line[0], line[1:5], line[5:]
 				emotion = ''
-				if len(right_panel) == 5:
-					emotion = right_panel[-1]
-					right_panel = right_panel[:-1]
+				left_panel = right_panel = None
+				time, *another = line
+
+				if len(another) == 2:
+					left_panel, right_panel = another[0:1], another[1:]
+				elif len(another) == 5:
+					if int(another[0]) == -1:
+						left_panel, right_panel = another[0:1], another[1:]
+					else:
+						left_panel, right_panel = another[:4], another[4:5]
+				elif len(another) == 6:
+					if int(another[0]) == -1:
+						left_panel, right_panel, emotion = another[0:1], another[1:5], another[5]
+					else:
+						left_panel, right_panel, emotion = another[:4], another[4:5], another[5]
+				elif len(another) == 8:
+					left_panel, right_panel = another[:4], another[4:8]
+				if len(another) == 9:
+					left_panel, right_panel, emotion = another[:4], another[4:8], another[8]
 
 				left_panel, right_panel = list(map(int, left_panel)), list(map(int, right_panel))
 				clock = Clock(time)
@@ -101,6 +117,11 @@ class PanelGenerator:
 		while self.l_panel.is_panel_updating() or self.r_panel.is_panel_updating():
 			do_step()
 			cur_time_in_msecs += self.ONE_FRAME_DURATION
+
+		captured = do_step()
+		while captured:
+			captured = do_step()
+
 
 		self.video_writer.release()
 		self.cap.release()

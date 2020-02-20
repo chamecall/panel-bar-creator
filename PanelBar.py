@@ -200,11 +200,8 @@ class PanelBar:
 
 
 
-
-
 	def set_new_values(self, top_panel_values, emotion=''):
-		assert len(top_panel_values) == 4
-
+		print(top_panel_values)
 		self.values_are_empty = (top_panel_values[0] == -1)
 		if self.values_are_empty:
 			return
@@ -235,7 +232,6 @@ class PanelBar:
 		frame = self.draw_total_score(frame)
 		frame = self.draw_age_gender_info(frame)
 		self.draw_photo(frame)
-		print(frame.shape)
 		return frame
 
 	def is_chatter_not_detected(self):
