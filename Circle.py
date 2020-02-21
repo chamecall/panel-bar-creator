@@ -17,7 +17,7 @@ class Circle:
     # the less the more saturated
     COLOR_GRADIENT_THRESH = 220
 
-    FONT = ImageFont.truetype('LatoBlack.ttf', 35)
+    FONT = ImageFont.truetype('LatoBlack.ttf', 15)
 
     def __init__(self, diameter, percentage, front_color):
         self.diameter = diameter
@@ -48,12 +48,12 @@ class Circle:
                          Circle.COLOR_GRADIENT_THRESH - int(i * g_step),
                          Circle.COLOR_GRADIENT_THRESH - int(i * r_step))
             cv2.ellipse(circle, (diameter // 2, diameter // 2), (radius, radius), -90, prev_degree, degree, cur_color,
-                        Circle.BORDER_THICKNESS)
+                        Circle.BORDER_THICKNESS, lineType=cv2.LINE_AA)
 
         degrees = int(percentage * ONE_PERCENT_IN_DEGREES)
         if degrees != 360:
             cv2.ellipse(circle, (diameter // 2, diameter // 2), (radius, radius), -90, degrees, 360, back_color,
-                        Circle.BORDER_THICKNESS)
+                        Circle.BORDER_THICKNESS, lineType=cv2.LINE_AA)
 
         # text_size, base_line = cv2.getTextSize(str(percentage), Circle.FONT, Circle.TEXT_SCALE, Circle.TEXT_THICKNESS)
         # text_point = ((diameter - text_size[0]) // 2), (diameter - text_size[1]) // 2 + text_size[1]
@@ -62,7 +62,7 @@ class Circle:
 
 
         circle[:, :, 3] = 255 - circle[:, :, 3]
-        circle = draw_text_in_center_with_shadow(circle, str(percentage), Circle.FONT, Rect(0, 0, circle.shape[1], circle.shape[0]), shadow_shift=1, y_shift=-5)
+        circle = draw_text_in_center_with_shadow(circle, str(percentage), Circle.FONT, Rect(0, 0, circle.shape[1], circle.shape[0]), shadow_shift=1, y_shift=-2)
 
 
         return circle

@@ -1,12 +1,10 @@
+import argparse
+
 import cv2
-import numpy as np
 
 from Circle import Circle
-from Color import Color
-from PanelBar import PanelBar
-from RoundedRect import RoundedRect
 from Clock import Clock
-import argparse
+from PanelBar import PanelBar
 from Utils import overlay_transparent
 
 parser = argparse.ArgumentParser()
@@ -22,109 +20,134 @@ parser.add_argument('-tts', type=float, help='total text scale, def is 2.0')
 parser.add_argument('-ttt', type=int, help='total text thickness, def is 3')
 args = parser.parse_args()
 if args.ad:
-	PanelBar.ANIMATION_DURATION_IN_FRAMES = args.ad
+    PanelBar.ANIMATION_DURATION_IN_FRAMES = args.ad
 if args.vp:
-	PanelBar.TOP_BOTTOM_PADDING = args.vp
+    PanelBar.TOP_BOTTOM_PADDING = args.vp
 if args.cr:
-	Circle.BORDER_THICKNESS = args.cr
+    Circle.BORDER_THICKNESS = args.cr
 if args.cgt:
-	Circle.COLOR_GRADIENT_THRESH = args.cgt
+    Circle.COLOR_GRADIENT_THRESH = args.cgt
 if args.cts:
-	Circle.TEXT_SCALE = args.cts
+    Circle.TEXT_SCALE = args.cts
 if args.ctt:
-	Circle.TEXT_THICKNESS = args.ctt
+    Circle.TEXT_THICKNESS = args.ctt
 if args.tts:
-	PanelBar.SCORE_TEXT_SCALE = args.tts
+    PanelBar.SCORE_TEXT_SCALE = args.tts
 if args.ttt:
-	PanelBar.SCORE_TEXT_THICKNESS = args.ttt
+    PanelBar.SCORE_TEXT_THICKNESS = args.ttt
 
 
 class PanelGenerator:
+    VIDEO_FPS = 25
+    VIDEO_RESOLUTION = 1920, 1080
+    # in msec
+    ONE_FRAME_DURATION = 1 / VIDEO_FPS * 1000
+    LR_MARGIN = 160
+    TOP_MARGIN = 70
+    MALE_FRAME_FILE = 'frame/mobile.png'
+    FEMALE_FRAME_FILE = 'frame/glasses.png'
 
-	VIDEO_FPS = 25
-	VIDEO_RESOLUTION = 1920, 1080
-	# in msec
-	ONE_FRAME_DURATION = 1 / VIDEO_FPS * 1000
-	LR_MARGIN = 200
-	TOP_MARGIN = 70
+    def __init__(self):
 
+        self.video_writer = cv2.VideoWriter('panel_animation.mkv', cv2.VideoWriter_fourcc(*"XVID"), self.VIDEO_FPS,
+                                            self.VIDEO_RESOLUTION)
 
-	def __init__(self):
+        self.r_panel = PanelBar('user.png', 'YOU, 21')
+        self.l_panel = PanelBar('f_face.png', 'F, 23')
+        self.cap = cv2.VideoCapture('vozera_cut.mp4')
+        self.male_frame = cv2.imread(self.MALE_FRAME_FILE, cv2.IMREAD_UNCHANGED)
+        self.female_frame = cv2.imread(self.FEMALE_FRAME_FILE, cv2.IMREAD_UNCHANGED)
+        self.lp_x, self.y, self.rp_x = self.LR_MARGIN, self.TOP_MARGIN, self.VIDEO_RESOLUTION[0] - \
+                                       self.r_panel.background.shape[1] - self.LR_MARGIN
 
-		self.video_writer = cv2.VideoWriter('panel_animation.mkv', cv2.VideoWriter_fourcc(*"XVID"), self.VIDEO_FPS,
-											self.VIDEO_RESOLUTION)
+    def process_file(self, input_file_name):
+        cur_time_in_msec = 0
 
-		self.r_panel = PanelBar('user.png', 'YOU, 21')
-		self.l_panel = PanelBar('f_face.png', 'F, 23')
-		self.cap = cv2.VideoCapture('vozera.mp4')
+        def update_frame(reverse, sex):
+            captured, frame = self.cap.read()
+            l_panel_fragment = frame[self.y:self.y + self.l_panel.background.shape[0],
+                               self.lp_x:self.lp_x + self.l_panel.background.shape[1]]
+            r_panel_fragment = frame[self.y:self.y + self.r_panel.background.shape[0],
+                               self.rp_x:self.rp_x + self.r_panel.background.shape[1]]
 
+            if not reverse:
+                l_frame = self.l_panel.update_UI(l_panel_fragment)
+                r_frame = self.r_panel.update_UI(r_panel_fragment)
+            else:
+                r_frame = self.l_panel.update_UI(r_panel_fragment)
+                l_frame = self.r_panel.update_UI(l_panel_fragment)
 
-		self.lp_x, self.y, self.rp_x = self.LR_MARGIN, self.TOP_MARGIN, self.VIDEO_RESOLUTION[0] - self.r_panel.background.shape[1] - self.LR_MARGIN
+            overlay_transparent(frame, l_frame, (self.lp_x, self.y))
+            overlay_transparent(frame, r_frame, (self.rp_x, self.y))
 
-	def process_file(self, input_file_name):
-		cur_time_in_msecs = 0
+            if 'M' in sex:
+                overlay_transparent(frame, self.male_frame, (0, 0))
+            elif 'F' in sex:
+                overlay_transparent(frame, self.female_frame, (0, 0))
 
-		def do_step():
-			captured, phone = self.cap.read()
-			l_panel_fragment = phone[self.y:self.y + self.l_panel.background.shape[0], self.lp_x:self.lp_x + self.l_panel.background.shape[1]]
-			r_panel_fragment = phone[self.y:self.y + self.r_panel.background.shape[0], self.rp_x:self.rp_x + self.r_panel.background.shape[1]]
+            self.video_writer.write(frame)
+            return captured
 
-			l_frame  = self.l_panel.updateUI(l_panel_fragment)
-			r_frame = self.r_panel.updateUI(r_panel_fragment)
-			overlay_transparent(phone, l_frame, (self.lp_x, self.y))
-			overlay_transparent(phone, r_frame, (self.rp_x, self.y))
+        with open(input_file_name, 'r') as input_file:
+            line = input_file.readline().strip()
+            prev_sex = ''
+            while line:
+                clock, left_panel, right_panel, sex, emotion = self.parse_line(line)
+                reverse = True if 'F' in sex else False
+                no_animation = True if prev_sex != sex else False
 
+                while cur_time_in_msec < clock.total_msecs:
+                    update_frame(reverse, prev_sex)
+                    cur_time_in_msec += self.ONE_FRAME_DURATION
 
-			self.video_writer.write(phone)
-			return captured
+                self.l_panel.set_new_values(left_panel, no_animation, emotion)
+                self.r_panel.set_new_values(right_panel, no_animation)
+                prev_sex = sex
+                line = input_file.readline().strip()
 
-		with open(input_file_name, 'r') as input_file:
-			line = input_file.readline().strip()
+        while self.l_panel.is_panel_updating() or self.r_panel.is_panel_updating():
+            update_frame(reverse, prev_sex)
+            cur_time_in_msec += self.ONE_FRAME_DURATION
 
-			while line:
-				line = line.split(',')
-				emotion = ''
-				left_panel = right_panel = None
-				time, *another = line
+        captured = update_frame(reverse, prev_sex)
+        while captured:
+            captured = update_frame(reverse, prev_sex)
 
-				if len(another) == 2:
-					left_panel, right_panel = another[0:1], another[1:]
-				elif len(another) == 5:
-					if int(another[0]) == -1:
-						left_panel, right_panel = another[0:1], another[1:]
-					else:
-						left_panel, right_panel = another[:4], another[4:5]
-				elif len(another) == 6:
-					if int(another[0]) == -1:
-						left_panel, right_panel, emotion = another[0:1], another[1:5], another[5]
-					else:
-						left_panel, right_panel, emotion = another[:4], another[4:5], another[5]
-				elif len(another) == 8:
-					left_panel, right_panel = another[:4], another[4:8]
-				if len(another) == 9:
-					left_panel, right_panel, emotion = another[:4], another[4:8], another[8]
+        self.video_writer.release()
+        self.cap.release()
 
-				left_panel, right_panel = list(map(int, left_panel)), list(map(int, right_panel))
-				clock = Clock(time)
-				while cur_time_in_msecs < clock.total_msecs:
-					do_step()
-					cur_time_in_msecs += self.ONE_FRAME_DURATION
+    @staticmethod
+    def parse_line(line):
+        line = line.split(',')
+        emotion = ''
+        sex = ''
+        time, *another = line
+        clock = Clock(time)
 
-				self.l_panel.set_new_values(left_panel, emotion)
-				self.r_panel.set_new_values(right_panel)
-				line = input_file.readline().strip()
+        if int(another[0]) == -1:
+            left_panel = another[0:1]
+            another = another[1:]
+        else:
+            left_panel = another[:4]
+            another = another[4:]
 
-		while self.l_panel.is_panel_updating() or self.r_panel.is_panel_updating():
-			do_step()
-			cur_time_in_msecs += self.ONE_FRAME_DURATION
+        if int(another[0]) == -1:
+            right_panel = another[0:1]
+            another = another[1:]
+        else:
+            right_panel = another[:4]
+            another = another[4:]
 
-		captured = do_step()
-		while captured:
-			captured = do_step()
+        left_panel, right_panel = list(map(int, left_panel)), list(map(int, right_panel))
 
+        if left_panel[0] != -1 or right_panel[0] != -1:
+            sex = another[0]
+            another = another[1:]
 
-		self.video_writer.release()
-		self.cap.release()
+            if another:
+                emotion = another[0]
+
+        return clock, left_panel, right_panel, sex, emotion
 
 
 panel_generator = PanelGenerator()
