@@ -66,7 +66,7 @@ class PanelBar:
         self.brain_back = None
         self.photo = None
         self.calc_cells()
-        self.brain_animation = Animator('new_brain.gif', (self.score_cell.width, self.score_cell.height))
+        self.brain_animation = Animator('raw/new_brain.gif', (self.score_cell.width, self.score_cell.height))
         self.load_images(photo)
 
     def blend_images(self, back_image, fore_image, pos):

@@ -10,14 +10,14 @@ ONE_PERCENT_IN_DEGREES = 360 / MAX_PERCENT_VALUE
 
 
 class Circle:
-    BORDER_THICKNESS = 10
+    BORDER_THICKNESS = 7
     TEXT_THICKNESS = 2
     TEXT_SCALE = 1
 
     # the less the more saturated
     COLOR_GRADIENT_THRESH = 220
 
-    FONT = ImageFont.truetype('LatoBlack.ttf', 15)
+    FONT = ImageFont.truetype('LatoBlack.ttf', 22)
 
     def __init__(self, diameter, percentage, front_color):
         self.diameter = diameter

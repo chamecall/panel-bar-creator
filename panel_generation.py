@@ -42,7 +42,7 @@ class PanelGenerator:
     VIDEO_RESOLUTION = 1920, 1080
     # in msec
     ONE_FRAME_DURATION = 1 / VIDEO_FPS * 1000
-    LR_MARGIN = 160
+    LR_MARGIN = 170
     TOP_MARGIN = 70
     MALE_FRAME_FILE = 'frame/mobile.png'
     FEMALE_FRAME_FILE = 'frame/glasses.png'
@@ -52,8 +52,8 @@ class PanelGenerator:
         self.video_writer = cv2.VideoWriter('panel_animation.mkv', cv2.VideoWriter_fourcc(*"XVID"), self.VIDEO_FPS,
                                             self.VIDEO_RESOLUTION)
 
-        self.r_panel = PanelBar('user.png', 'YOU, 21')
-        self.l_panel = PanelBar('f_face.png', 'F, 23')
+        self.r_panel = PanelBar('avatars/male.png', 'M, 21')
+        self.l_panel = PanelBar('avatars/female.png', 'F, 23')
         self.cap = cv2.VideoCapture('vozera_cut.mp4')
         self.male_frame = cv2.imread(self.MALE_FRAME_FILE, cv2.IMREAD_UNCHANGED)
         self.female_frame = cv2.imread(self.FEMALE_FRAME_FILE, cv2.IMREAD_UNCHANGED)
@@ -65,6 +65,8 @@ class PanelGenerator:
 
         def update_frame(reverse, sex):
             captured, frame = self.cap.read()
+            if not captured: return False
+
             l_panel_fragment = frame[self.y:self.y + self.l_panel.background.shape[0],
                                self.lp_x:self.lp_x + self.l_panel.background.shape[1]]
             r_panel_fragment = frame[self.y:self.y + self.r_panel.background.shape[0],
@@ -100,8 +102,12 @@ class PanelGenerator:
                     update_frame(reverse, prev_sex)
                     cur_time_in_msec += self.ONE_FRAME_DURATION
 
-                self.l_panel.set_new_values(left_panel, no_animation, emotion)
-                self.r_panel.set_new_values(right_panel, no_animation)
+                if not reverse:
+	                self.l_panel.set_new_values(left_panel, no_animation, emotion)
+	                self.r_panel.set_new_values(right_panel, no_animation)
+                else:
+	                self.l_panel.set_new_values(left_panel, no_animation)
+	                self.r_panel.set_new_values(right_panel, no_animation, emotion)
                 prev_sex = sex
                 line = input_file.readline().strip()
 
