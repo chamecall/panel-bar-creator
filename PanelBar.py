@@ -8,7 +8,7 @@ from Cell import Cell
 from Circle import Circle
 from Color import Color
 from Rect import Rect
-from Utils import draw_text_in_center_with_shadow
+from Utils import draw_text_in_center
 from Utils import overlay_transparent
 
 
@@ -22,7 +22,6 @@ class PanelBar:
 
     INFO_TEXT_SCALE = 1.6
     INFO_TEXT_THICKNESS = 2
-    FONT = cv2.FONT_HERSHEY_SIMPLEX
 
     CIRCLE_COLORS = [Color.RED, Color.YELLOW, Color.BLUE, Color.AQUA]
 
@@ -200,14 +199,14 @@ class PanelBar:
         if self.is_chatter_not_detected():
             return
 
-        return draw_text_in_center_with_shadow(background, self.emotion, self.FONT, self.emotion_cell)
+        return draw_text_in_center(background, self.emotion, self.FONT, self.emotion_cell)
 
     def draw_brain_frame(self, background):
         brain = self.brain_animation.next()
         x = (self.score_cell.width - brain.shape[1]) // 2 + self.score_cell.left
         y = (self.score_cell.height - brain.shape[0]) // 2 + self.score_cell.top
 
-        background = overlay_transparent(background, brain, (x, y))
+        overlay_transparent(background, brain, (x, y))
 
     def draw_photo(self, background):
         if self.is_chatter_not_detected():
@@ -219,13 +218,13 @@ class PanelBar:
         if self.is_chatter_not_detected():
             return
 
-        return draw_text_in_center_with_shadow(background, self.info, self.FONT, self.age_gender_cell)
+        return draw_text_in_center(background, self.info, self.FONT, self.age_gender_cell)
 
     def draw_total_score(self, background):
         total_score = int(sum([cell.circle.percentage for cell in self.cells]) / 4 * 10)
         score = str(total_score)
 
-        return draw_text_in_center_with_shadow(background, score, self.FONT, self.score_cell, y_shift=-20)
+        return draw_text_in_center(background, score, self.FONT, self.score_cell, y_shift=-20)
 
     def is_panel_updating(self):
         return self.cells[0].remained_values

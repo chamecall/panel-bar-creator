@@ -8,3 +8,11 @@ class Rect:
 
 		self.right = self.left + self.width
 		self.bottom = self.top + self.height
+		
+	def get_pos(self):
+		return self.left, self.top
+	
+	def get_size(self):
+		return self.width, self.height
+	
+	

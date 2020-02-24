@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-from Utils import draw_text_in_center_with_shadow
+from Utils import draw_text_in_center
 from Color import Color
 from Rect import Rect
 from PIL import ImageFont
@@ -62,7 +62,7 @@ class Circle:
 
 
         circle[:, :, 3] = 255 - circle[:, :, 3]
-        circle = draw_text_in_center_with_shadow(circle, str(percentage), Circle.FONT, Rect(0, 0, circle.shape[1], circle.shape[0]), shadow_shift=1, y_shift=-2)
+        circle = draw_text_in_center(circle, str(percentage), Circle.FONT, Rect(0, 0, circle.shape[1], circle.shape[0]), shadow_shift=1, y_shift=-2)
 
 
         return circle

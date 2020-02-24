@@ -1,11 +1,12 @@
 import argparse
-
 import cv2
-
+from PIL import ImageFont
 from Circle import Circle
 from PanelBar import PanelBar
 from PanelInfoScheduler import PanelInfoScheduler
 from Utils import overlay_transparent
+from ObjectDetectionAnimator import ObjectDetectionAnimator
+from Utils import draw_text_in_pos
 
 parser = argparse.ArgumentParser()
 
@@ -47,13 +48,16 @@ class PanelGenerator:
 	TOP_MARGIN = 70
 	MALE_FRAME_FILE = 'frame/mobile.png'
 	FEMALE_FRAME_FILE = 'frame/glasses.png'
+	OBJ_DETECT_GIF = 'raw/object_detection.gif'
+	OBJ_DETECT_DUR_IN_FRAMES = 30
+	FONT = ImageFont.truetype('LatoBlack.ttf', 25)
 	
-	def __init__(self, path_to_panel_file):
+	def __init__(self, path_to_panel_file, path_to_obj_detect_file):
 		
 		self.video_writer = cv2.VideoWriter('panel_animation.mkv', cv2.VideoWriter_fourcc(*"XVID"), self.VIDEO_FPS,
 											self.VIDEO_RESOLUTION)
 		self.panel_info_scheduler = PanelInfoScheduler(path_to_panel_file)
-		
+		self.obj_detect_animator = ObjectDetectionAnimator(path_to_obj_detect_file, self.OBJ_DETECT_GIF)
 		self.r_panel = PanelBar('avatars/male.png', 'M, 21')
 		self.l_panel = PanelBar('avatars/female.png', 'F, 23')
 		self.cap = cv2.VideoCapture('vozera_cut.mp4')
@@ -76,32 +80,41 @@ class PanelGenerator:
 			
 			cur_time_in_msec += self.ONE_FRAME_DURATION
 			changed, panel_info = self.panel_info_scheduler.get_info_by_time(cur_time_in_msec)
+			animation_frame = self.obj_detect_animator.next_frame(cur_time_in_msec)
 			
-			if panel_info:
-				self.update_panels(panel_info, changed)
+			self.update_panels(panel_info, changed)
 
-			frame = self.update_frame(frame, reverse, self.sex)
+			frame = self.overlay_object_detection_animation(frame, animation_frame)
+			frame = self.overlay_panels(frame, reverse, self.sex)
 			
 			self.video_writer.write(frame)
 		
 		self.video_writer.release()
 		self.cap.release()
 		
+	def overlay_object_detection_animation(self, frame, animation_frame):
+		if animation_frame is not None:
+			pos = self.obj_detect_animator.animation_rect.get_pos()
+			overlay_transparent(frame, animation_frame, pos)
+			frame = draw_text_in_pos(frame, self.obj_detect_animator.label, self.FONT, (pos[0] + 10, pos[1] - 12))
+		return frame
+	
 	def update_panels(self, panel_info, changed):
-		clock, left_values, right_values, self.sex, emotion = panel_info
-		reverse = True if 'F' in self.sex else False
-		no_animation = True if self.prev_sex != self.sex else False
+		if panel_info:
+			clock, left_values, right_values, self.sex, emotion = panel_info
+			reverse = True if 'F' in self.sex else False
+			no_animation = True if self.prev_sex != self.sex else False
+		
+			if changed:
+				if not reverse:
+					self.l_panel.set_new_values(left_values, no_animation, emotion)
+					self.r_panel.set_new_values(right_values, no_animation)
+				else:
+					self.l_panel.set_new_values(left_values, no_animation)
+					self.r_panel.set_new_values(right_values, no_animation, emotion)
+				self.prev_sex = self.sex
 	
-		if changed:
-			if not reverse:
-				self.l_panel.set_new_values(left_values, no_animation, emotion)
-				self.r_panel.set_new_values(right_values, no_animation)
-			else:
-				self.l_panel.set_new_values(left_values, no_animation)
-				self.r_panel.set_new_values(right_values, no_animation, emotion)
-			self.prev_sex = self.sex
-	
-	def update_frame(self, frame, reverse, sex):
+	def overlay_panels(self, frame, reverse, sex):
 		
 		l_panel_fragment = frame[self.y:self.y + self.l_panel.background.shape[0],
 						   self.lp_x:self.lp_x + self.l_panel.background.shape[1]]
@@ -126,5 +139,5 @@ class PanelGenerator:
 		return frame
 
 
-panel_generator = PanelGenerator(args.panel_info_file)
+panel_generator = PanelGenerator(args.panel_info_file, args.object_detection_file)
 panel_generator.process_file()
