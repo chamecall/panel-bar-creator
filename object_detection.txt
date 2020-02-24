@@ -1,0 +1,2 @@
+0:00:300, 400, 400, 200, 200, Cup of whisky
+0:02:215, 600, 300, 100, 150, Some kind of distortion
