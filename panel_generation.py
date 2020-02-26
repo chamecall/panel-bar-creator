@@ -54,7 +54,7 @@ class PanelGenerator:
 	
 	def __init__(self, path_to_panel_file, path_to_obj_detect_file):
 		
-		self.video_writer = cv2.VideoWriter('panel_animation.mkv', cv2.VideoWriter_fourcc(*"XVID"), self.VIDEO_FPS,
+		self.video_writer = cv2.VideoWriter('panel_animation.mp4', cv2.VideoWriter_fourcc(*"mp4v"), self.VIDEO_FPS,
 											self.VIDEO_RESOLUTION)
 		self.panel_info_scheduler = PanelInfoScheduler(path_to_panel_file)
 		self.obj_detect_animator = ObjectDetectionAnimator(path_to_obj_detect_file, self.OBJ_DETECT_GIF)
@@ -71,7 +71,7 @@ class PanelGenerator:
 	def process_file(self):
 		
 		cur_time_in_msec = 0
-		reverse = False
+		self.reverse = False
 
 		while True:
 			captured, frame = self.cap.read()
@@ -85,7 +85,7 @@ class PanelGenerator:
 			self.update_panels(panel_info, changed)
 
 			frame = self.overlay_object_detection_animation(frame, animation_frame)
-			frame = self.overlay_panels(frame, reverse, self.sex)
+			frame = self.overlay_panels(frame, self.reverse, self.sex)
 			
 			self.video_writer.write(frame)
 		
@@ -102,11 +102,11 @@ class PanelGenerator:
 	def update_panels(self, panel_info, changed):
 		if panel_info:
 			clock, left_values, right_values, self.sex, emotion = panel_info
-			reverse = True if 'F' in self.sex else False
+			self.reverse = True if 'F' in self.sex else False
 			no_animation = True if self.prev_sex != self.sex else False
 		
 			if changed:
-				if not reverse:
+				if not self.reverse:
 					self.l_panel.set_new_values(left_values, no_animation, emotion)
 					self.r_panel.set_new_values(right_values, no_animation)
 				else:
