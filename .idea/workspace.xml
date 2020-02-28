@@ -1,7 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="45e960ad-758a-42d0-a260-0e7027887031" name="Default Changelist" comment="" />
+=======
+    <list default="true" id="45e960ad-758a-42d0-a260-0e7027887031" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/AnimationData.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FaceAnimationScheduler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/face_animation.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/panel-bar-creator.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/panel-bar-creator.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Animator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Animator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cell.py" beforeDir="false" afterPath="$PROJECT_DIR$/Cell.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Circle.py" beforeDir="false" afterPath="$PROJECT_DIR$/Circle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clock.py" beforeDir="false" afterPath="$PROJECT_DIR$/Clock.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Color.py" beforeDir="false" afterPath="$PROJECT_DIR$/Color.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LatoBlack.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/LatoBlack.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ObjectDetectionAnimator.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObjectDetectionAnimator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ObjectDetectionScheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObjectDetectionScheduler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PanelBar.py" beforeDir="false" afterPath="$PROJECT_DIR$/PanelBar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PanelInfoScheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/PanelInfoScheduler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rect.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rect.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RoundedRect.py" beforeDir="false" afterPath="$PROJECT_DIR$/RoundedRect.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/Utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avatars/female.png" beforeDir="false" afterPath="$PROJECT_DIR$/avatars/female.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avatars/male.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/avatars/male.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avatars/male.png" beforeDir="false" afterPath="$PROJECT_DIR$/avatars/male.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avatars/user.png" beforeDir="false" afterPath="$PROJECT_DIR$/avatars/user.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frame/glasses.png" beforeDir="false" afterPath="$PROJECT_DIR$/frame/glasses.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frame/mobile.png" beforeDir="false" afterPath="$PROJECT_DIR$/frame/mobile.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/heart.png" beforeDir="false" afterPath="$PROJECT_DIR$/icons/heart.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/heart.svg" beforeDir="false" afterPath="$PROJECT_DIR$/icons/heart.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/image.png" beforeDir="false" afterPath="$PROJECT_DIR$/icons/image.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/lightning.png" beforeDir="false" afterPath="$PROJECT_DIR$/icons/lightning.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/lightning.svg" beforeDir="false" afterPath="$PROJECT_DIR$/icons/lightning.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/lips.png" beforeDir="false" afterPath="$PROJECT_DIR$/icons/lips.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/lips.svg" beforeDir="false" afterPath="$PROJECT_DIR$/icons/lips.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/money.png" beforeDir="false" afterPath="$PROJECT_DIR$/icons/money.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/money.svg" beforeDir="false" afterPath="$PROJECT_DIR$/icons/money.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/input.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/object_detection.txt" beforeDir="false" afterPath="$PROJECT_DIR$/object_detection.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/panel_animation.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/panel_animation.mp4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/panel_animation_mkv.mkv" beforeDir="false" afterPath="$PROJECT_DIR$/panel_animation_mkv.mkv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/panel_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/panel_generation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/play_gif.py" beforeDir="false" afterPath="$PROJECT_DIR$/play_gif.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/bottom_panel.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/bottom_panel.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/brain_back.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/brain_back.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/brain_static.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/brain_static.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/circle.gif" beforeDir="false" afterPath="$PROJECT_DIR$/raw/circle.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/circle_full.gif" beforeDir="false" afterPath="$PROJECT_DIR$/raw/circle_full.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/coin.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/coin.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/col_circle.gif" beforeDir="false" afterPath="$PROJECT_DIR$/raw/col_circle.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/face_bound.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/face_bound.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/face_bound_with_heart.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/face_bound_with_heart.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/face_detect.gif" beforeDir="false" afterPath="$PROJECT_DIR$/raw/face_detect.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/gif.gif" beforeDir="false" afterPath="$PROJECT_DIR$/raw/gif.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/heart.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/heart.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/lightning.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/lightning.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/lips.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/lips.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/new_brain.gif" beforeDir="false" afterPath="$PROJECT_DIR$/raw/new_brain.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/object_detection.gif" beforeDir="false" afterPath="$PROJECT_DIR$/raw/object_detection.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/top_panel.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/top_panel.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/va.gif" beforeDir="false" afterPath="$PROJECT_DIR$/raw/va.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/Фон (по надписью).png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/Фон (по надписью).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/Фон (под картой).png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/Фон (под картой).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vozera_cut.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/vozera_cut.mp4" afterDir="false" />
+    </list>
+>>>>>>> 4bfb9674d610b8a58757de29045c5209cd79c980
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +83,16 @@
       </list>
     </option>
   </component>
+<<<<<<< HEAD
+=======
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>print</find>
+      <find>sex</find>
+      <find>circle(</find>
+    </findStrings>
+  </component>
+>>>>>>> 4bfb9674d610b8a58757de29045c5209cd79c980
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -50,10 +129,13 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="832" y="136" width="1084" height="722" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1582824069303" />
+<<<<<<< HEAD
     <state x="525" y="-18" width="850" height="1070" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1582893392605">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="525" y="-18" width="850" height="1070" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1582893392605" />
+=======
+>>>>>>> 4bfb9674d610b8a58757de29045c5209cd79c980
     <state x="389" y="84" key="SettingsEditor" timestamp="1582884314493">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -63,9 +145,12 @@
     </state>
     <state x="3021" y="305" key="com.intellij.ide.util.TipDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1582883848051" />
     <state x="3021" y="305" key="com.intellij.ide.util.TipDialog/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1582884323947" />
+<<<<<<< HEAD
     <state x="528" y="58" width="864" height="948" key="find.popup" timestamp="1582890633229">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="528" y="58" width="864" height="948" key="find.popup/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1582890633229" />
+=======
+>>>>>>> 4bfb9674d610b8a58757de29045c5209cd79c980
   </component>
 </project>

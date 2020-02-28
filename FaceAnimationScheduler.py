@@ -2,6 +2,7 @@ from Clock import Clock
 from collections import deque
 from Rect import Rect
 from AnimationMover import AnimationMover
+from AnimationData import AnimationData
 
 class FaceAnimationScheduler:
     def __init__(self, path_to_file):

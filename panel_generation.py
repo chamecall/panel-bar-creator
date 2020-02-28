@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import cv2
 from PIL import ImageFont
 from Circle import Circle
@@ -67,8 +67,8 @@ class PanelGenerator:
         self.panel_info_scheduler = PanelInfoScheduler(path_to_panel_file)
         self.obj_detect_animator = ObjectDetectionAnimator(path_to_obj_detect_file, self.OBJ_DETECT_GIF)
         self.face_animation_scheduler = FaceAnimationScheduler(path_to_face_animation_file)
-        self.r_panel = PanelBar('M', 21)
-        self.l_panel = PanelBar('F', 23)
+        self.r_panel = PanelBar('M', 23)
+        self.l_panel = PanelBar('F', 21)
 
         scanned_male_avatar = cv2.imread('avatars/scanned_male.png', cv2.IMREAD_UNCHANGED)
         male_avatar = cv2.imread('avatars/male.png', cv2.IMREAD_UNCHANGED)
@@ -81,7 +81,7 @@ class PanelGenerator:
         self.male_avatar = cv2.resize(male_avatar, avatar_size)
         self.female_avatar = cv2.resize(female_avatar, avatar_size)
 
-        self.cap = cv2.VideoCapture('vozera_cut.mp4')
+        self.cap = cv2.VideoCapture('vozera.mp4')
         self.male_frame = cv2.imread(self.MALE_FRAME_FILE, cv2.IMREAD_UNCHANGED)
         self.female_frame = cv2.imread(self.FEMALE_FRAME_FILE, cv2.IMREAD_UNCHANGED)
         self.lp_x, self.y, self.rp_x = self.LR_MARGIN, self.TOP_MARGIN, self.VIDEO_RESOLUTION[0] - \
@@ -122,14 +122,11 @@ class PanelGenerator:
                 self.animation_data = AnimationMover(bitmap, start_rect, end_rect, 15)
 
 
-
+            frame = self.overlay_face_animation(frame)
             self.update_panels(panel_info, changed)
 
             frame = self.overlay_object_detection_animation(frame, animation_frame)
             frame = self.overlay_panels(frame, self.reverse, self.sex)
-            frame = self.overlay_face_animation(frame)
-
-
 
 
             self.video_writer.write(frame)
@@ -146,11 +143,9 @@ class PanelGenerator:
         overlay_transparent(frame, scaled_bitmap, (new_pos.x, new_pos.y))
 
         if not self.animation_data.steps_left():
-            if self.cur_side == 'L':
-                self.r_panel.photo = scaled_bitmap
-                self.scanned_female_avatar = scaled_bitmap
-            else:
-                self.l_panel.photo = scaled_bitmap
+            self.scanned_female_avatar = scaled_bitmap
+            self.l_panel.photo = self.scanned_female_avatar
+			#cv2.imwrite('scanned_female.png')
             self.animation_data = None
 
         return frame
@@ -162,6 +157,7 @@ class PanelGenerator:
             view_changed = True if self.prev_sex != self.sex else False
 
             if changed:
+                print(self.scanned_female_avatar)
                 if not self.reverse:
                     self.r_panel.photo = self.male_avatar
                     self.l_panel.photo = self.scanned_female_avatar
