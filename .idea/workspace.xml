@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="45e960ad-758a-42d0-a260-0e7027887031" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ObjectDetectionScheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObjectDetectionScheduler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/object_detection.txt" beforeDir="false" afterPath="$PROJECT_DIR$/object_detection.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/panel_animation.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/panel_animation.mp4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/panel_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/panel_generation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

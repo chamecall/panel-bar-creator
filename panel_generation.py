@@ -62,7 +62,7 @@ class PanelGenerator:
 
     def __init__(self, path_to_panel_file, path_to_obj_detect_file, path_to_face_animation_file):
 
-        self.video_writer = cv2.VideoWriter('panel_animation.mp4', cv2.VideoWriter_fourcc(*"mp4v"), self.VIDEO_FPS,
+        self.video_writer = cv2.VideoWriter('panel_animation.mp4', cv2.VideoWriter_fourcc(*"MJPG"), self.VIDEO_FPS,
                                             self.VIDEO_RESOLUTION)
         self.panel_info_scheduler = PanelInfoScheduler(path_to_panel_file)
         self.obj_detect_animator = ObjectDetectionAnimator(path_to_obj_detect_file, self.OBJ_DETECT_GIF)
@@ -81,7 +81,7 @@ class PanelGenerator:
         self.male_avatar = cv2.resize(male_avatar, avatar_size)
         self.female_avatar = cv2.resize(female_avatar, avatar_size)
 
-        self.cap = cv2.VideoCapture('vozera.mp4')
+        self.cap = cv2.VideoCapture('vozera_cut.mp4')
         self.male_frame = cv2.imread(self.MALE_FRAME_FILE, cv2.IMREAD_UNCHANGED)
         self.female_frame = cv2.imread(self.FEMALE_FRAME_FILE, cv2.IMREAD_UNCHANGED)
         self.lp_x, self.y, self.rp_x = self.LR_MARGIN, self.TOP_MARGIN, self.VIDEO_RESOLUTION[0] - \
