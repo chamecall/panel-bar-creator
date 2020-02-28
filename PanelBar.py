@@ -35,7 +35,7 @@ class PanelBar:
     AVATAR_SIZE_TO_PHOTO_CELL_SIZE = 0.7
     FONT = ImageFont.truetype('LatoBlack.ttf', 30)
 
-    def __init__(self, photo, info):
+    def __init__(self, photo, sex, age):
         scale_coeff = 1.5
         self.top_panel = cv2.imread('raw/top_panel.png', cv2.IMREAD_UNCHANGED)
         self.top_panel = cv2.resize(self.top_panel, (
@@ -61,7 +61,8 @@ class PanelBar:
         self.emotion_cell = None
         self.score_cell = None
         self.emotion = ''
-        self.info = info
+        self.age = age
+        self.sex = sex
         self.brain_back = None
         self.photo = None
         self.calc_cells()
@@ -217,8 +218,11 @@ class PanelBar:
     def draw_age_gender_info(self, background):
         if self.is_chatter_not_detected():
             return
-
-        return draw_text_in_center(background, self.info, self.FONT, self.age_gender_cell)
+        if not self.emotion:
+            sex = 'me'
+        else:
+            sex = self.sex
+        return draw_text_in_center(background, f'{sex}, {self.age}', self.FONT, self.age_gender_cell)
 
     def draw_total_score(self, background):
         total_score = int(sum([cell.circle.percentage for cell in self.cells]) / 4 * 10)

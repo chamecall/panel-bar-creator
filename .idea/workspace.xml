@@ -1,111 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="45e960ad-758a-42d0-a260-0e7027887031" name="Default Changelist" comment="" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <list default="true" id="45e960ad-758a-42d0-a260-0e7027887031" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/AnimationData.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FaceAnimationScheduler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/face_animation.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/panel-bar-creator.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/panel-bar-creator.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Animator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Animator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cell.py" beforeDir="false" afterPath="$PROJECT_DIR$/Cell.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Circle.py" beforeDir="false" afterPath="$PROJECT_DIR$/Circle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clock.py" beforeDir="false" afterPath="$PROJECT_DIR$/Clock.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Color.py" beforeDir="false" afterPath="$PROJECT_DIR$/Color.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LatoBlack.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/LatoBlack.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ObjectDetectionAnimator.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObjectDetectionAnimator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ObjectDetectionScheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/ObjectDetectionScheduler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PanelBar.py" beforeDir="false" afterPath="$PROJECT_DIR$/PanelBar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PanelInfoScheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/PanelInfoScheduler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rect.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rect.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RoundedRect.py" beforeDir="false" afterPath="$PROJECT_DIR$/RoundedRect.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/Utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avatars/female.png" beforeDir="false" afterPath="$PROJECT_DIR$/avatars/female.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avatars/male.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/avatars/male.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avatars/male.png" beforeDir="false" afterPath="$PROJECT_DIR$/avatars/male.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/avatars/user.png" beforeDir="false" afterPath="$PROJECT_DIR$/avatars/user.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frame/glasses.png" beforeDir="false" afterPath="$PROJECT_DIR$/frame/glasses.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frame/mobile.png" beforeDir="false" afterPath="$PROJECT_DIR$/frame/mobile.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/heart.png" beforeDir="false" afterPath="$PROJECT_DIR$/icons/heart.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/heart.svg" beforeDir="false" afterPath="$PROJECT_DIR$/icons/heart.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/image.png" beforeDir="false" afterPath="$PROJECT_DIR$/icons/image.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/lightning.png" beforeDir="false" afterPath="$PROJECT_DIR$/icons/lightning.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/lightning.svg" beforeDir="false" afterPath="$PROJECT_DIR$/icons/lightning.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/lips.png" beforeDir="false" afterPath="$PROJECT_DIR$/icons/lips.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/lips.svg" beforeDir="false" afterPath="$PROJECT_DIR$/icons/lips.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/money.png" beforeDir="false" afterPath="$PROJECT_DIR$/icons/money.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/money.svg" beforeDir="false" afterPath="$PROJECT_DIR$/icons/money.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/input.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/object_detection.txt" beforeDir="false" afterPath="$PROJECT_DIR$/object_detection.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/panel_animation.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/panel_animation.mp4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/panel_animation_mkv.mkv" beforeDir="false" afterPath="$PROJECT_DIR$/panel_animation_mkv.mkv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/panel_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/panel_generation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/play_gif.py" beforeDir="false" afterPath="$PROJECT_DIR$/play_gif.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/bottom_panel.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/bottom_panel.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/brain_back.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/brain_back.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/brain_static.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/brain_static.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/circle.gif" beforeDir="false" afterPath="$PROJECT_DIR$/raw/circle.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/circle_full.gif" beforeDir="false" afterPath="$PROJECT_DIR$/raw/circle_full.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/coin.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/coin.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/col_circle.gif" beforeDir="false" afterPath="$PROJECT_DIR$/raw/col_circle.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/face_bound.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/face_bound.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/face_bound_with_heart.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/face_bound_with_heart.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/face_detect.gif" beforeDir="false" afterPath="$PROJECT_DIR$/raw/face_detect.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/gif.gif" beforeDir="false" afterPath="$PROJECT_DIR$/raw/gif.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/heart.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/heart.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/lightning.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/lightning.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/lips.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/lips.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/new_brain.gif" beforeDir="false" afterPath="$PROJECT_DIR$/raw/new_brain.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/object_detection.gif" beforeDir="false" afterPath="$PROJECT_DIR$/raw/object_detection.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/top_panel.png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/top_panel.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/va.gif" beforeDir="false" afterPath="$PROJECT_DIR$/raw/va.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/Фон (по надписью).png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/Фон (по надписью).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw/Фон (под картой).png" beforeDir="false" afterPath="$PROJECT_DIR$/raw/Фон (под картой).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vozera_cut.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/vozera_cut.mp4" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PanelBar.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="329">
-              <caret line="208" column="8" selection-start-line="208" selection-start-column="8" selection-end-line="208" selection-end-column="8" />
-              <folding>
-                <element signature="e#0#29#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Utils.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="441">
-              <caret line="21" column="53" selection-start-line="21" selection-start-column="53" selection-end-line="21" selection-end-column="53" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-                <element signature="e#663#1400#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Animator.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="11" column="32" lean-forward="true" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#468#712#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/panel_generation.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="586">
-              <caret line="86" column="83" selection-start-line="86" selection-start-column="83" selection-end-line="86" selection-end-column="83" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ObjectDetectionScheduler.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="17" selection-start-line="17" selection-end-line="17" />
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ObjectDetectionAnimator.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-              <folding>
-                <element signature="e#0#29#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Rect.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PanelInfoScheduler.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="12" selection-start-line="12" selection-end-line="17" selection-end-column="34" />
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -124,63 +89,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/Circle.py" />
-        <option value="$PROJECT_DIR$/Scheduler.py" />
-        <option value="$PROJECT_DIR$/PanelInfoScheduler.py" />
-        <option value="$PROJECT_DIR$/ObjectDetectionScheduler.py" />
-        <option value="$PROJECT_DIR$/Rect.py" />
-        <option value="$PROJECT_DIR$/ObjectDetectionAnimator.py" />
-        <option value="$PROJECT_DIR$/Utils.py" />
-        <option value="$PROJECT_DIR$/PanelBar.py" />
-        <option value="$PROJECT_DIR$/panel_generation.py" />
-        <option value="$PROJECT_DIR$/Animator.py" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-2" />
-    <option name="y" value="-19" />
-    <option name="width" value="1924" />
-    <option name="height" value="1101" />
-  </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="panel-bar-creator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="panel-bar-creator" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+  <component name="ProjectId" id="1YOpwgKIanFKhFYrTQDAKPErPey" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Python" />
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -195,118 +113,23 @@
     </task>
     <servers />
   </component>
-  <component name="ToolWindowManager">
-    <frame x="-2" y="-19" width="1924" height="1101" extended-state="0" />
-    <editor active="true" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19905214" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3285568" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="10" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Circle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="50" column="69" selection-start-line="50" selection-start-column="69" selection-end-line="50" selection-end-column="69" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PanelInfoScheduler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="12" selection-start-line="12" selection-end-line="17" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Rect.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ObjectDetectionScheduler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ObjectDetectionAnimator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="21" column="53" selection-start-line="21" selection-start-column="53" selection-end-line="21" selection-end-column="53" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#663#1400#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PanelBar.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="208" column="8" selection-start-line="208" selection-start-column="8" selection-end-line="208" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/panel_generation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="586">
-          <caret line="86" column="83" selection-start-line="86" selection-start-column="83" selection-end-line="86" selection-end-column="83" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Animator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="11" column="32" lean-forward="true" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#468#712#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+  <component name="WindowStateProjectService">
+    <state x="499" y="146" width="804" height="667" key="#HTTP_Proxy" timestamp="1582823831312">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="499" y="146" width="804" height="667" key="#HTTP_Proxy/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1582823831312" />
+    <state x="832" y="136" width="1084" height="722" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1582824069303">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="832" y="136" width="1084" height="722" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1582824069303" />
+    <state x="389" y="84" key="SettingsEditor" timestamp="1582884314493">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="389" y="84" key="SettingsEditor/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1582884314493" />
+    <state x="3021" y="305" key="com.intellij.ide.util.TipDialog" timestamp="1582884323947">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="3021" y="305" key="com.intellij.ide.util.TipDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1582883848051" />
+    <state x="3021" y="305" key="com.intellij.ide.util.TipDialog/0.0.1920.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1582884323947" />
   </component>
 </project>

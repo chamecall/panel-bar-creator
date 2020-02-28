@@ -21,8 +21,9 @@ class Animator:
         self.elapsed_frames_num += 1
 
         return self.seq[self.frame_n]
-    
+
     def is_over(self):
+
         return self.frames_limit is not None and self.elapsed_frames_num == self.frames_limit
 
     def decompose_gif(self, path):
