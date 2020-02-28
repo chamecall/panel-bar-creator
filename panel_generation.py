@@ -208,7 +208,7 @@ class PanelGenerator:
         if animation_frame is not None:
             pos = self.obj_detect_animator.animation_rect.get_pos()
             overlay_transparent(frame, animation_frame, pos)
-            frame = draw_text_in_pos(frame, self.obj_detect_animator.label, self.FONT, (pos[0] + 10, pos[1] - 12))
+            frame = draw_text_in_pos(frame, self.obj_detect_animator.label, self.FONT, (pos[0], pos[1] - 30))
         return frame
 
 
