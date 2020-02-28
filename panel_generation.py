@@ -9,7 +9,7 @@ from Utils import overlay_transparent
 from ObjectDetectionAnimator import ObjectDetectionAnimator
 from Utils import draw_text_in_pos
 from FaceAnimationScheduler import FaceAnimationScheduler
-from AnimationData import AnimationData
+from AnimationMover import AnimationMover
 
 parser = argparse.ArgumentParser()
 
@@ -57,6 +57,9 @@ class PanelGenerator:
     OBJ_DETECT_DUR_IN_FRAMES = 30
     FONT = ImageFont.truetype('LatoBlack.ttf', 25)
 
+
+
+
     def __init__(self, path_to_panel_file, path_to_obj_detect_file, path_to_face_animation_file):
 
         self.video_writer = cv2.VideoWriter('panel_animation.mp4', cv2.VideoWriter_fourcc(*"mp4v"), self.VIDEO_FPS,
@@ -64,9 +67,21 @@ class PanelGenerator:
         self.panel_info_scheduler = PanelInfoScheduler(path_to_panel_file)
         self.obj_detect_animator = ObjectDetectionAnimator(path_to_obj_detect_file, self.OBJ_DETECT_GIF)
         self.face_animation_scheduler = FaceAnimationScheduler(path_to_face_animation_file)
-        self.r_panel = PanelBar('avatars/male.png', 'M', 21)
-        self.l_panel = PanelBar('avatars/female.png', 'F', '23')
-        self.cap = cv2.VideoCapture('vozera_cut.mp4')
+        self.r_panel = PanelBar('M', 21)
+        self.l_panel = PanelBar('F', 23)
+
+        scanned_male_avatar = cv2.imread('avatars/scanned_male.png', cv2.IMREAD_UNCHANGED)
+        male_avatar = cv2.imread('avatars/male.png', cv2.IMREAD_UNCHANGED)
+        self.scanned_female_avatar = None
+        female_avatar = cv2.imread('avatars/female.png', cv2.IMREAD_UNCHANGED)
+
+        avatar_size = self.l_panel.photo_cell.width, self.l_panel.photo_cell.height
+
+        self.scanned_male_avatar = cv2.resize(scanned_male_avatar, avatar_size)
+        self.male_avatar = cv2.resize(male_avatar, avatar_size)
+        self.female_avatar = cv2.resize(female_avatar, avatar_size)
+
+        self.cap = cv2.VideoCapture('vozera.mp4')
         self.male_frame = cv2.imread(self.MALE_FRAME_FILE, cv2.IMREAD_UNCHANGED)
         self.female_frame = cv2.imread(self.FEMALE_FRAME_FILE, cv2.IMREAD_UNCHANGED)
         self.lp_x, self.y, self.rp_x = self.LR_MARGIN, self.TOP_MARGIN, self.VIDEO_RESOLUTION[0] - \
@@ -74,6 +89,8 @@ class PanelGenerator:
         self.prev_sex = self.sex = ''
         self.reverse = False
         self.animation_data = None
+
+
 
     def process_file(self):
 
@@ -86,13 +103,14 @@ class PanelGenerator:
                 break
 
             cur_time_in_msec += self.ONE_FRAME_DURATION
+            print(cur_time_in_msec / 1000)
             changed, panel_info = self.panel_info_scheduler.get_info_by_time(cur_time_in_msec)
             animation_frame = self.obj_detect_animator.next_frame(cur_time_in_msec)
             face_animation_info = self.face_animation_scheduler.get_info_by_time(cur_time_in_msec)
             if face_animation_info:
                 start_rect, side = face_animation_info
-                self.cur_size = side
-                if side == 'L':
+                self.cur_side = side
+                if 'L' in side:
                     end_rect = self.l_panel.photo_cell
                     end_rect = Rect(self.lp_x + end_rect.left, self.TOP_MARGIN + end_rect.top, end_rect.width,
                                     end_rect.height)
@@ -101,13 +119,18 @@ class PanelGenerator:
                     end_rect = Rect(self.rp_x + end_rect.left, self.y + end_rect.top, end_rect.width,
                                     end_rect.height)
                 bitmap = frame[start_rect.top:start_rect.top+start_rect.height, start_rect.left:start_rect.left+start_rect.width]
-                self.animation_data = AnimationData(bitmap, start_rect, end_rect, 10)
+                self.animation_data = AnimationMover(bitmap, start_rect, end_rect, 15)
+
+
 
             self.update_panels(panel_info, changed)
 
             frame = self.overlay_object_detection_animation(frame, animation_frame)
             frame = self.overlay_panels(frame, self.reverse, self.sex)
             frame = self.overlay_face_animation(frame)
+
+
+
 
             self.video_writer.write(frame)
 
@@ -119,15 +142,15 @@ class PanelGenerator:
         if not self.animation_data:
             return frame
 
-
         scaled_bitmap, new_pos = self.animation_data.get_new_located_bitmap()
         overlay_transparent(frame, scaled_bitmap, (new_pos.x, new_pos.y))
 
         if not self.animation_data.steps_left():
-            if self.cur_size == 'L':
-                self.l_panel.photo = scaled_bitmap
-            else:
+            if self.cur_side == 'L':
                 self.r_panel.photo = scaled_bitmap
+                self.scanned_female_avatar = scaled_bitmap
+            else:
+                self.l_panel.photo = scaled_bitmap
             self.animation_data = None
 
         return frame
@@ -136,15 +159,23 @@ class PanelGenerator:
         if panel_info:
             clock, left_values, right_values, self.sex, emotion = panel_info
             self.reverse = True if 'F' in self.sex else False
-            no_animation = True if self.prev_sex != self.sex else False
+            view_changed = True if self.prev_sex != self.sex else False
 
             if changed:
                 if not self.reverse:
-                    self.l_panel.set_new_values(left_values, no_animation, emotion)
-                    self.r_panel.set_new_values(right_values, no_animation)
+                    self.r_panel.photo = self.male_avatar
+                    self.l_panel.photo = self.scanned_female_avatar
                 else:
-                    self.l_panel.set_new_values(left_values, no_animation)
-                    self.r_panel.set_new_values(right_values, no_animation, emotion)
+                    self.l_panel.photo = self.female_avatar
+                    self.r_panel.photo = self.scanned_male_avatar
+
+            if changed:
+                if not self.reverse:
+                    self.l_panel.set_new_values(left_values, view_changed, emotion)
+                    self.r_panel.set_new_values(right_values, view_changed)
+                else:
+                    self.l_panel.set_new_values(left_values, view_changed)
+                    self.r_panel.set_new_values(right_values, view_changed, emotion)
                 self.prev_sex = self.sex
 
     def overlay_panels(self, frame, reverse, sex):

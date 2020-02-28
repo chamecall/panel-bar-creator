@@ -35,7 +35,7 @@ class PanelBar:
     AVATAR_SIZE_TO_PHOTO_CELL_SIZE = 0.7
     FONT = ImageFont.truetype('LatoBlack.ttf', 30)
 
-    def __init__(self, photo, sex, age):
+    def __init__(self, sex, age):
         scale_coeff = 1.5
         self.top_panel = cv2.imread('raw/top_panel.png', cv2.IMREAD_UNCHANGED)
         self.top_panel = cv2.resize(self.top_panel, (
@@ -67,18 +67,15 @@ class PanelBar:
         self.photo = None
         self.calc_cells()
         self.brain_animation = Animator('raw/new_brain.gif', (self.score_cell.width, self.score_cell.height))
-        self.load_images(photo)
+        self.photo = None
+        self.load_images()
 
     def blend_images(self, back_image, fore_image, pos):
         back_image[pos[1]:pos[1] + fore_image.shape[0],
         pos[0]:pos[0] + fore_image.shape[1]] = fore_image
 
-    def load_images(self, photo):
-        photo = cv2.imread(photo, cv2.IMREAD_UNCHANGED)
-        self.photo = cv2.resize(photo, (self.photo_cell.width, self.photo_cell.height))
-
+    def load_images(self):
         brain_back = cv2.imread(self.BRAIN_BACK_IMG, cv2.IMREAD_UNCHANGED)
-        resized_brain_back = None
         if brain_back.shape[1] >= brain_back.shape[0]:
             resized_brain_back = imutils.resize(brain_back, width=self.score_cell.width)
         else:
@@ -210,7 +207,7 @@ class PanelBar:
         overlay_transparent(background, brain, (x, y))
 
     def draw_photo(self, background):
-        if self.is_chatter_not_detected():
+        if self.is_chatter_not_detected() or self.photo is None:
             return
 
         overlay_transparent(background, self.photo, (self.photo_cell.left, self.photo_cell.top))
