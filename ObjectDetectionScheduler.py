@@ -19,7 +19,7 @@ class ObjectDetectionScheduler:
 		return self.cur_data[1:]
 
 	def get_next_data(self):
-		if not self.detections_queue[0]:
+		if not self.detections_queue:
 			return []
 
 		return self.parse_line(self.detections_queue.popleft())
