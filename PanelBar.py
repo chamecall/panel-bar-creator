@@ -69,6 +69,7 @@ class PanelBar:
         self.brain_animation = Animator('raw/new_brain.gif', (self.score_cell.width, self.score_cell.height))
         self.photo = None
         self.load_images()
+        self.main_person = False
 
     def blend_images(self, back_image, fore_image, pos):
         back_image[pos[1]:pos[1] + fore_image.shape[0],
@@ -155,12 +156,13 @@ class PanelBar:
 
             self.icons.append(icon)
 
-    def set_new_values(self, top_panel_values, no_animation, emotion=''):
+    def set_new_values(self, top_panel_values, no_animation, emotion='', main_person=False):
         self.values_are_empty = (top_panel_values[0] == -1)
         if self.values_are_empty:
             return
 
         self.emotion = emotion
+        self.main_person = main_person
 
         for i, new_value in enumerate(top_panel_values):
             step = (new_value - self.cells[i].circle.percentage) // (self.ANIMATION_DURATION_IN_FRAMES - 1)
@@ -215,7 +217,7 @@ class PanelBar:
     def draw_age_gender_info(self, background):
         if self.is_chatter_not_detected():
             return
-        if not self.emotion:
+        if self.main_person:
             sex = 'me'
         else:
             sex = self.sex
