@@ -10,6 +10,8 @@ from ObjectDetectionAnimator import ObjectDetectionAnimator
 from Utils import draw_text_in_pos
 from FaceAnimationScheduler import FaceAnimationScheduler
 from AnimationMover import AnimationMover
+from Animator import Animator
+from Clock import Clock
 
 parser = argparse.ArgumentParser()
 
@@ -56,13 +58,12 @@ class PanelGenerator:
     OBJ_DETECT_GIF = 'raw/object_detection.gif'
     OBJ_DETECT_DUR_IN_FRAMES = 30
     FONT = ImageFont.truetype('LatoBlack.ttf', 25)
-
-
-
+    FACE_DETECT_ANIMATION = 'raw/face_detect.gif'
 
     def __init__(self, path_to_panel_file, path_to_obj_detect_file, path_to_face_animation_file):
 
-        self.video_writer = cv2.VideoWriter('panel_animation.mp4', cv2.VideoWriter_fourcc(*"MJPG"), self.VIDEO_FPS,
+        self.video_writer = cv2.VideoWriter('panel_animation.mkv', cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'),
+                                            self.VIDEO_FPS,
                                             self.VIDEO_RESOLUTION)
         self.panel_info_scheduler = PanelInfoScheduler(path_to_panel_file)
         self.obj_detect_animator = ObjectDetectionAnimator(path_to_obj_detect_file, self.OBJ_DETECT_GIF)
@@ -89,8 +90,9 @@ class PanelGenerator:
         self.prev_sex = self.sex = ''
         self.reverse = False
         self.animation_data = None
-
-
+        self.face_detection_bound_animator = None
+        self.cur_side = None
+        self.face_position = None
 
     def process_file(self):
 
@@ -103,36 +105,54 @@ class PanelGenerator:
                 break
 
             cur_time_in_msec += self.ONE_FRAME_DURATION
+
+            if cur_time_in_msec >= Clock('0:30:000').total_msecs and not self.face_detection_bound_animator:
+                self.face_position = (743, 65)
+                self.face_detection_bound_animator = Animator('raw/face_detect.gif',
+                                                              (440, 440), 70)
+
             print(cur_time_in_msec / 1000)
             changed, panel_info = self.panel_info_scheduler.get_info_by_time(cur_time_in_msec)
             animation_frame = self.obj_detect_animator.next_frame(cur_time_in_msec)
             face_animation_info = self.face_animation_scheduler.get_info_by_time(cur_time_in_msec)
-            if face_animation_info:
-                start_rect, side = face_animation_info
-                self.cur_side = side
-                if 'L' in side:
-                    end_rect = self.l_panel.photo_cell
-                    end_rect = Rect(self.lp_x + end_rect.left, self.TOP_MARGIN + end_rect.top, end_rect.width,
-                                    end_rect.height)
-                else:
-                    end_rect = self.r_panel.photo_cell
-                    end_rect = Rect(self.rp_x + end_rect.left, self.y + end_rect.top, end_rect.width,
-                                    end_rect.height)
-                bitmap = frame[start_rect.top:start_rect.top+start_rect.height, start_rect.left:start_rect.left+start_rect.width]
-                self.animation_data = AnimationMover(bitmap, start_rect, end_rect, 15)
-
+            self.check_next_face(frame, face_animation_info)
 
             frame = self.overlay_face_animation(frame)
             self.update_panels(panel_info, changed)
 
             frame = self.overlay_object_detection_animation(frame, animation_frame)
             frame = self.overlay_panels(frame, self.reverse, self.sex)
-
+            frame = self.overlay_face_detection_bound(frame)
 
             self.video_writer.write(frame)
 
         self.video_writer.release()
         self.cap.release()
+
+    def overlay_face_detection_bound(self, frame):
+        if self.face_detection_bound_animator and not self.face_detection_bound_animator.is_over():
+            face_detection_bound_frame = self.face_detection_bound_animator.next()
+
+            overlay_transparent(frame, face_detection_bound_frame, self.face_position)
+        return frame
+
+    def check_next_face(self, frame, face_animation_info):
+        if face_animation_info:
+            start_rect, side = face_animation_info
+            print('start', start_rect.__dict__)
+            self.cur_side = side
+            if 'L' in side:
+                end_rect = self.l_panel.photo_cell
+                end_rect = Rect(self.lp_x + end_rect.left, self.TOP_MARGIN + end_rect.top, end_rect.width,
+                                end_rect.height)
+            else:
+                end_rect = self.r_panel.photo_cell
+                end_rect = Rect(self.rp_x + end_rect.left, self.y + end_rect.top, end_rect.width,
+                                end_rect.height)
+            bitmap = frame[start_rect.top:start_rect.top + start_rect.height,
+                     start_rect.left:start_rect.left + start_rect.width]
+
+            self.animation_data = AnimationMover(bitmap.copy(), start_rect, end_rect, 15)
 
     def overlay_face_animation(self, frame):
 
@@ -145,7 +165,6 @@ class PanelGenerator:
         if not self.animation_data.steps_left():
             self.scanned_female_avatar = scaled_bitmap
             self.l_panel.photo = self.scanned_female_avatar
-			#cv2.imwrite('scanned_female.png')
             self.animation_data = None
 
         return frame
@@ -157,7 +176,6 @@ class PanelGenerator:
             view_changed = True if self.prev_sex != self.sex else False
 
             if changed:
-                print(self.scanned_female_avatar)
                 if not self.reverse:
                     self.r_panel.photo = self.male_avatar
                     self.l_panel.photo = self.scanned_female_avatar
@@ -190,10 +208,10 @@ class PanelGenerator:
         overlay_transparent(frame, l_frame, (self.lp_x, self.y))
         overlay_transparent(frame, r_frame, (self.rp_x, self.y))
 
-        if 'M' in sex:
-            overlay_transparent(frame, self.male_frame, (0, 0))
-        elif 'F' in sex:
-            overlay_transparent(frame, self.female_frame, (0, 0))
+        # if 'M' in sex:
+        #     overlay_transparent(frame, self.male_frame, (0, 0))
+        # elif 'F' in sex:
+        #     overlay_transparent(frame, self.female_frame, (0, 0))
 
         return frame
 

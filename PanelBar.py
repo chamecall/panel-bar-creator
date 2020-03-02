@@ -29,7 +29,6 @@ class PanelBar:
     ICONS_NAMES = ['lips.png', 'coin.png', 'lightning.png', 'heart.png']
 
     BRAIN_BACK_IMG = 'raw/brain_back.png'
-
     BTW_PANELS_VERTICAL_MARGIN = 10
     cells_sizes = (0.33, 0.33, 0.34)
     AVATAR_SIZE_TO_PHOTO_CELL_SIZE = 0.7
@@ -50,6 +49,7 @@ class PanelBar:
         self.blend_images(self.background, self.top_panel, (0, 0))
         self.blend_images(self.background, self.bottom_panel,
                           (0, self.top_panel.shape[0] + self.BTW_PANELS_VERTICAL_MARGIN))
+
         self.values_are_empty = True
         self.top_work_area = None
         self.circles = []
@@ -64,7 +64,6 @@ class PanelBar:
         self.age = age
         self.sex = sex
         self.brain_back = None
-        self.photo = None
         self.calc_cells()
         self.brain_animation = Animator('raw/new_brain.gif', (self.score_cell.width, self.score_cell.height))
         self.photo = None
@@ -102,7 +101,8 @@ class PanelBar:
         for cell in self.cells:
             background = overlay_transparent(background, cell.pict, cell.pict_pos)
 
-    def overlay_image_on_background(self, background, image, pos):
+    @staticmethod
+    def overlay_image_on_background(background, image, pos):
         background[pos[1]:pos[1] + image.shape[0], pos[0]:pos[0] + image.shape[1]] = image
 
     def calc_cells(self):
@@ -110,8 +110,7 @@ class PanelBar:
         cell_width, cell_height = self.top_panel.shape[1] // 4, self.top_panel.shape[0]
         self.circle_diameter = int(cell_width * 0.6)
 
-        icon_width, icons_height = cell_width - self.circle_diameter, cell_height
-
+        icon_width, icon_height = cell_width - self.circle_diameter, cell_height
         self.generate_circles()
         self.load_icons(icon_width)
 
@@ -188,6 +187,7 @@ class PanelBar:
         frame = self.draw_total_score(frame)
         frame = self.draw_age_gender_info(frame)
         self.draw_photo(frame)
+
         return frame
 
     def is_chatter_not_detected(self):

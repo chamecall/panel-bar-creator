@@ -5,26 +5,37 @@ from PIL import Image, ImageSequence
 
 
 class Animator:
-    def __init__(self, path, dst_size, frames_limit=None):
+    def __init__(self, path, dst_size, frames_limit=None, step_over=1):
         self.seq, self.size = self.decompose_gif(path)
         self.frame_n = 0
         self.len = len(self.seq)
+
         self.dst_size = dst_size
         self.resize_seq()
         self.elapsed_frames_num = 0
         self.frames_limit = self.len - 1 if frames_limit == -1 else frames_limit
+        self.step_over = step_over
 
     def next(self):
         if self.is_over():
             return None
-        self.frame_n = (self.frame_n + 1) % self.len
-        self.elapsed_frames_num += 1
+
+        self.elapsed_frames_num += self.step_over
+
+        next_frame_num = self.frame_n + self.step_over
+        if self.frames_limit is None:
+            self.frame_n = next_frame_num % self.len
+        elif next_frame_num <= self.frames_limit:
+            self.frame_n = next_frame_num
+        else:
+            return None
+
 
         return self.seq[self.frame_n]
 
     def is_over(self):
 
-        return self.frames_limit is not None and self.elapsed_frames_num == self.frames_limit
+        return self.frames_limit is not None and self.elapsed_frames_num + self.step_over >= self.frames_limit
 
     def decompose_gif(self, path):
         imgs = []
