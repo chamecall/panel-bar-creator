@@ -14,9 +14,14 @@ from FaceAnimationScheduler import FaceAnimationScheduler
 from AnimationMover import AnimationMover
 from Animator import Animator
 from Clock import Clock
+import moviepy.editor as mpe
+import subprocess
+import time
+import pathlib
+from os import path
 
 parser = argparse.ArgumentParser()
-
+parser.add_argument('input_video', type=str, help='input videofile name')
 parser.add_argument('panel_info_file', type=str, help='input panel info file name')
 parser.add_argument('object_detection_file', type=str, help='input object detection info file name')
 parser.add_argument('face_animation_file', type=str, help='input face animation info file name')
@@ -62,10 +67,14 @@ class PanelGenerator:
 	OBJ_DETECT_DUR_IN_FRAMES = 30
 	FONT = ImageFont.truetype('LatoBlack.ttf', 25)
 	FACE_DETECT_ANIMATION = 'raw/face_detect.gif'
+
+	OUTPUT_FILE_NAME = 'completed_result.mp4'
+	SPLITTED_AUDIO_FILE_NAME = 'splitted_audio.wav'
+	TEMP_FILE_NAME = 'temp.mkv'
 	
-	def __init__(self, path_to_panel_file, path_to_obj_detect_file, path_to_face_animation_file):
+	def __init__(self, path_to_video, path_to_panel_file, path_to_obj_detect_file, path_to_face_animation_file):
 		
-		self.video_writer = cv2.VideoWriter('panel_animation.mkv', cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'),
+		self.video_writer = cv2.VideoWriter(self.TEMP_FILE_NAME, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'),
 		                                    self.VIDEO_FPS,
 		                                    self.VIDEO_RESOLUTION)
 		self.panel_info_scheduler = PanelInfoScheduler(path_to_panel_file)
@@ -85,7 +94,9 @@ class PanelGenerator:
 		self.male_avatar = cv2.resize(male_avatar, avatar_size)
 		self.female_avatar = cv2.resize(female_avatar, avatar_size)
 		
-		self.cap = cv2.VideoCapture('/samba/Vozera_fix.mp4')
+		self.cap = cv2.VideoCapture(path_to_video)
+		mpe.AudioFileClip(path_to_video).write_audiofile(self.SPLITTED_AUDIO_FILE_NAME)
+
 		#self.cap.set(cv2.CAP_PROP_POS_FRAMES, 950)
 		
 		self.male_frame = cv2.imread(self.MALE_FRAME_FILE, cv2.IMREAD_UNCHANGED)
@@ -130,12 +141,14 @@ class PanelGenerator:
 			frame = self.overlay_face_detection_bound(frame)
 			
 			
-			cv2.imshow('frame', frame)
-			cv2.waitKey(1)
+
 			self.video_writer.write(frame)
 		
 		self.video_writer.release()
 		self.cap.release()
+		cur_dir = str(pathlib.Path().absolute())
+		subprocess.call(['ffmpeg', '-i', path.join(cur_dir, self.TEMP_FILE_NAME), '-i', path.join(cur_dir, self.SPLITTED_AUDIO_FILE_NAME),
+		 '-c:v', 'copy', '-c:a', 'aac', '-strict', 'experimental', path.join(cur_dir, self.OUTPUT_FILE_NAME)])
 	
 	def overlay_face_detection_bound(self, frame):
 		if self.face_detection_bound_animator and not self.face_detection_bound_animator.is_over():
@@ -227,5 +240,5 @@ class PanelGenerator:
 		return frame
 
 
-panel_generator = PanelGenerator(args.panel_info_file, args.object_detection_file, args.face_animation_file)
+panel_generator = PanelGenerator(args.input_video, args.panel_info_file, args.object_detection_file, args.face_animation_file)
 panel_generator.process_file()
