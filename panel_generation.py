@@ -1,4 +1,4 @@
-﻿import argparse
+import argparse
 import cv2
 from PIL import ImageFont
 
@@ -25,7 +25,7 @@ parser.add_argument('input_video', type=str, help='input videofile name')
 parser.add_argument('panel_info_file', type=str, help='input panel info file name')
 parser.add_argument('object_detection_file', type=str, help='input object detection info file name')
 parser.add_argument('face_animation_file', type=str, help='input face animation info file name')
-
+parser.add_argument('-start', type=int, help='start time in msecs')
 parser.add_argument('-ad', type=int, help='animation duration in frames, def is 9')
 parser.add_argument('-vp', type=int, help='vertical paddings in top panel, def is 10')
 parser.add_argument('-cr', type=int, help='the thickness of radius of the circles, def is 9')
@@ -35,6 +35,8 @@ parser.add_argument('-ctt', type=int, help='circle text thickness, def is 3')
 parser.add_argument('-tts', type=float, help='total text scale, def is 2.0')
 parser.add_argument('-ttt', type=int, help='total text thickness, def is 3')
 args = parser.parse_args()
+
+start_from = 0
 if args.ad:
 	PanelBar.ANIMATION_DURATION_IN_FRAMES = args.ad
 if args.vp:
@@ -51,6 +53,9 @@ if args.tts:
 	PanelBar.SCORE_TEXT_SCALE = args.tts
 if args.ttt:
 	PanelBar.SCORE_TEXT_THICKNESS = args.ttt
+if args.start:
+	print(args.start)
+	start_from = args.start
 
 
 class PanelGenerator:
@@ -71,6 +76,7 @@ class PanelGenerator:
 	OUTPUT_FILE_NAME = 'completed_result.mp4'
 	SPLITTED_AUDIO_FILE_NAME = 'splitted_audio.wav'
 	TEMP_FILE_NAME = 'temp.mkv'
+
 	
 	def __init__(self, path_to_video, path_to_panel_file, path_to_obj_detect_file, path_to_face_animation_file):
 		
@@ -82,7 +88,6 @@ class PanelGenerator:
 		self.face_animation_scheduler = FaceAnimationScheduler(path_to_face_animation_file)
 		self.r_panel = PanelBar('M', 23)
 		self.l_panel = PanelBar('F', 21)
-		
 		scanned_male_avatar = cv2.imread('avatars/scanned_male.png', cv2.IMREAD_UNCHANGED)
 		male_avatar = cv2.imread('avatars/male.png', cv2.IMREAD_UNCHANGED)
 		self.scanned_female_avatar = None
@@ -97,7 +102,9 @@ class PanelGenerator:
 		self.cap = cv2.VideoCapture(path_to_video)
 		mpe.AudioFileClip(path_to_video).write_audiofile(self.SPLITTED_AUDIO_FILE_NAME)
 
-		#self.cap.set(cv2.CAP_PROP_POS_FRAMES, 950)
+
+
+		self.cap.set(cv2.CAP_PROP_POS_FRAMES, start_from / self.ONE_FRAME_DURATION)
 		
 		self.male_frame = cv2.imread(self.MALE_FRAME_FILE, cv2.IMREAD_UNCHANGED)
 		self.female_frame = cv2.imread(self.FEMALE_FRAME_FILE, cv2.IMREAD_UNCHANGED)
@@ -112,7 +119,7 @@ class PanelGenerator:
 	
 	def process_file(self):
 		
-		cur_time_in_msec = -2580
+		cur_time_in_msec = -2580 + start_from
 		self.reverse = False
 		
 		while True:
@@ -140,7 +147,8 @@ class PanelGenerator:
 			frame = self.overlay_panels(frame, self.reverse, self.sex)
 			frame = self.overlay_face_detection_bound(frame)
 			
-			
+			cv2.imshow('frame', frame)
+			cv2.waitKey(1)
 
 			self.video_writer.write(frame)
 		
