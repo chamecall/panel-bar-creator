@@ -23,7 +23,7 @@ class PanelBar:
     INFO_TEXT_SCALE = 1.6
     INFO_TEXT_THICKNESS = 2
 
-    CIRCLE_COLORS = [Color.RED, Color.YELLOW, Color.BLUE, Color.AQUA]
+    CIRCLE_COLORS = [Color.RED, Color.YELLOW, Color.AQUA, Color.PINK]
 
     ICONS_DIR = 'raw/'
     ICONS_NAMES = ['lips.png', 'coin.png', 'lightning.png', 'heart.png']
@@ -36,19 +36,16 @@ class PanelBar:
 
     def __init__(self, sex, age):
         scale_coeff = 1.5
-        self.top_panel = cv2.imread('raw/top_panel.png', cv2.IMREAD_UNCHANGED)
-        self.top_panel = cv2.resize(self.top_panel, (
-            int(self.top_panel.shape[1] * scale_coeff), int(self.top_panel.shape[0] * scale_coeff)))
-        self.bottom_panel = cv2.imread('raw/bottom_panel.png', cv2.IMREAD_UNCHANGED)
-        self.bottom_panel = cv2.resize(self.bottom_panel, (
-            int(self.bottom_panel.shape[1] * scale_coeff), int(self.bottom_panel.shape[0] * scale_coeff)))
+        top_panel = cv2.imread('raw/top_panel.png', cv2.IMREAD_UNCHANGED)
+        self.top_panel = cv2.resize(top_panel, (370, 100))
 
-        self.background = self.generate_background((self.top_panel.shape[0] + self.BTW_PANELS_VERTICAL_MARGIN +
-                                                    self.bottom_panel.shape[0], self.top_panel.shape[1], 4))
+        bottom_panel = cv2.imread('raw/bottom_panel.png', cv2.IMREAD_UNCHANGED)
+        self.bottom_panel = cv2.resize(bottom_panel, (370, 103))
+        self.background = self.generate_background((203, 370, 4))
 
-        self.blend_images(self.background, self.top_panel, (0, 0))
-        self.blend_images(self.background, self.bottom_panel,
-                          (0, self.top_panel.shape[0] + self.BTW_PANELS_VERTICAL_MARGIN))
+        # self.blend_images(self.background, self.top_panel, (0, 0))
+        # self.blend_images(self.background, self.bottom_panel,
+        #                   (0, self.top_panel.shape[0] + self.BTW_PANELS_VERTICAL_MARGIN))
 
         self.values_are_empty = True
         self.top_work_area = None
@@ -68,6 +65,7 @@ class PanelBar:
         self.brain_animation = Animator('raw/new_brain.gif', (self.score_cell.width, self.score_cell.height))
         self.photo = None
         self.load_images()
+        self.main_person = False
 
     def blend_images(self, back_image, fore_image, pos):
         back_image[pos[1]:pos[1] + fore_image.shape[0],
@@ -81,11 +79,12 @@ class PanelBar:
             resized_brain_back = imutils.resize(brain_back, height=self.score_cell.height)
         self.brain_back = resized_brain_back
 
-    def overlay_brain_back(self, background):
-
-        x = (self.score_cell.width - self.brain_back.shape[1]) // 2 + self.score_cell.left
-        y = (self.score_cell.height - self.brain_back.shape[0]) // 2 + self.score_cell.top
-        overlay_transparent(background, self.brain_back, (x, y))
+    def overlay_brain_back(self, background, side):
+        brain_back = self.brain_back
+        if side == 'L':
+            brain_back = cv2.flip(self.brain_back, 1)
+        brain_back = cv2.resize(brain_back, (self.score_cell.width, self.score_cell.height))
+        overlay_transparent(background, brain_back, (self.score_cell.left, self.score_cell.top))
 
     @staticmethod
     def generate_background(size):
@@ -108,15 +107,15 @@ class PanelBar:
     def calc_cells(self):
 
         cell_width, cell_height = self.top_panel.shape[1] // 4, self.top_panel.shape[0]
-        self.circle_diameter = int(cell_width * 0.6)
+        self.circle_diameter = int(cell_height * 0.55)
 
-        icon_width, icon_height = cell_width - self.circle_diameter, cell_height
+        icon_width, icon_height = int(cell_width - cell_width * 0.6), cell_height
         self.generate_circles()
         self.load_icons(icon_width)
 
         for i, circle in enumerate(self.circles):
             self.cells.append(
-                Cell(circle, self.icons[i], (cell_width * i, (self.top_panel.shape[0] - self.circle_diameter) // 2),
+                Cell(circle, self.icons[i], (cell_width * i, 140),
                      (cell_width * i + self.circle_diameter, 0), self.CIRCLE_COLORS[i]))
 
         photo_cell_width = int(self.bottom_panel.shape[1] * self.cells_sizes[0])
@@ -139,7 +138,7 @@ class PanelBar:
         self.emotion_cell = Rect(self.age_gender_cell.left, self.age_gender_cell.top + self.age_gender_cell.height,
                                  self.age_gender_cell.width, self.age_gender_cell.height)
 
-        self.score_cell = Rect(self.emotion_cell.right, self.age_gender_cell.top,
+        self.score_cell = Rect(self.emotion_cell.right, 10,
                                int(self.bottom_panel.shape[1] * self.cells_sizes[2]),
                                photo_cell_height)
 
@@ -154,12 +153,13 @@ class PanelBar:
 
             self.icons.append(icon)
 
-    def set_new_values(self, top_panel_values, no_animation, emotion=''):
+    def set_new_values(self, top_panel_values, no_animation, emotion='', main_person=False):
         self.values_are_empty = (top_panel_values[0] == -1)
         if self.values_are_empty:
             return
 
         self.emotion = emotion
+        self.main_person = main_person
 
         for i, new_value in enumerate(top_panel_values):
             step = (new_value - self.cells[i].circle.percentage) // (self.ANIMATION_DURATION_IN_FRAMES - 1)
@@ -169,25 +169,35 @@ class PanelBar:
                 values = values[-1:]
             self.cells[i].set_new_values_deque(deque(values))
 
-    def update_UI(self, frame):
+    def update_UI(self, frame, side):
         if self.values_are_empty:
             return frame
+        
+        x_shift = 0
+        y_shift = 0
+        width_shift = -37
+        height_shift = -23
+        if side == 'L':
+            self.score_cell = Rect(260 + x_shift, 0 + y_shift, 147 + width_shift, 138 + height_shift)
+        elif side == 'R':
+            self.score_cell = Rect(0 + x_shift, 0 + y_shift, 147 + width_shift, 138 + height_shift)
 
         for i, cell in enumerate(self.cells):
             if cell.remained_values:
                 cell.set_new_circle(Circle(self.circle_diameter, cell.remained_values.popleft(), cell.circle_color))
 
-        frame = overlay_transparent(frame, self.background, (0, 0))
-        self.overlay_brain_back(frame)
-        self.draw_icons(frame)
-        frame = self.draw_emotion(frame)
+        #frame = overlay_transparent(frame, self.background, (0, 0))
+        self.overlay_brain_back(frame, side)
+        #self.draw_icons(frame)
+       # frame = self.draw_emotion(frame)
+        
 
         self.draw_circles(frame)
-        self.draw_brain_frame(frame)
+        self.draw_brain_frame(frame, side)
         frame = self.draw_total_score(frame)
-        frame = self.draw_age_gender_info(frame)
-        self.draw_photo(frame)
-
+        #frame = self.draw_age_gender_info(frame)
+        #self.draw_photo(frame)
+        
         return frame
 
     def is_chatter_not_detected(self):
@@ -199,12 +209,13 @@ class PanelBar:
 
         return draw_text_in_center(background, self.emotion, self.FONT, self.emotion_cell)
 
-    def draw_brain_frame(self, background):
+    def draw_brain_frame(self, background, side):
         brain = self.brain_animation.next()
-        x = (self.score_cell.width - brain.shape[1]) // 2 + self.score_cell.left
-        y = (self.score_cell.height - brain.shape[0]) // 2 + self.score_cell.top
-
-        overlay_transparent(background, brain, (x, y))
+        if side == 'L':
+            brain = cv2.flip(brain, 1)
+        brain = cv2.resize(brain, (self.score_cell.width, self.score_cell.height))
+        
+        overlay_transparent(background, brain, (self.score_cell.left, self.score_cell.top))
 
     def draw_photo(self, background):
         if self.is_chatter_not_detected() or self.photo is None:
@@ -215,7 +226,7 @@ class PanelBar:
     def draw_age_gender_info(self, background):
         if self.is_chatter_not_detected():
             return
-        if not self.emotion:
+        if self.main_person:
             sex = 'me'
         else:
             sex = self.sex
@@ -225,7 +236,7 @@ class PanelBar:
         total_score = int(sum([cell.circle.percentage for cell in self.cells]) / 4 * 10)
         score = str(total_score)
 
-        return draw_text_in_center(background, score, self.FONT, self.score_cell, y_shift=-20)
+        return draw_text_in_center(background, score, self.FONT, self.score_cell, y_shift=-15)
 
     def is_panel_updating(self):
         return self.cells[0].remained_values

@@ -9,6 +9,7 @@ class Color(tuple, Enum):
     GREEN = (0, 255, 0)
     YELLOW = (0, 255, 255)
     AQUA = (255, 255, 0)
+    PINK = (147, 20, 255)
     TRANSPARENT = (0, 0, 0, 0)
 
 
